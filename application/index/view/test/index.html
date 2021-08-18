@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="__JS__/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    $.ajax({
+        url:'{:url("index/test/aaac")}',
+        dataType:'json',
+        success:function (res){
+            console.log(res);
+            console.log(res[0]);
+            console.log(res[0].id);
+        }
+    })
+</script>
+</html>

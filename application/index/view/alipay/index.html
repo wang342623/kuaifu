@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>快服网充值</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="__CSS__/alipay.css">
+    <script src="__JS__/jquery-2.1.4.min.js?123"></script>
+    <script>
+       
+            function changeSize() {
+                document.documentElement.style.fontSize = document.documentElement.clientWidth/7.5+ 'px';
+                console.log(document.documentElement.clientWidth);
+                console.log(100 * document.documentElement.clientWidth / 7.5)
+            }
+            window.addEventListener('resize',changeSize,false)
+            changeSize()
+                // console.log(document.documentElement.style.fontSize = 100+ 'px');
+                // console.log(document.documentElement.clientWidth);
+    </script>
+</head>
+
+
+
+<body>
+    <div class="recharge-wait">
+<!--        <div class="top">-->
+<!--            <img src="./img.jpg" alt="" class="back">-->
+<!--            <p>快服网充值</p>-->
+<!--        </div>-->
+        <div class="body">
+            <div class="money">
+                <img src="__STATIC__/img/money_logo.png" alt="">
+                <span>{$money}</span>
+            </div>
+           <p class="account">快服账号<span class="email">{$account}</span></p>
+           <div class="recharge-way">
+               <img src="__STATIC__/img/zfb.png" alt="">
+               <span>使用支付宝支付</span>
+           </div>
+            <p class="tip">这是「快服网」相关产品的充值页面，请仔细确认。警惕冒用其他理由，并发送该页面让您进行充值的人员！</p>
+         
+        </div>
+        <div class="footer">
+<!--            <button class="btn-cancel" onclick="window.location.href='javascript:history.go(-1)';">取消</button>-->
+            <button class="btn-pay">支付</button>
+        </div>
+        <div class="other">
+
+        </div>
+    </div>
+    
+</body>
+<script>
+    $('.btn-pay').click(function () {
+
+        var money = {$money};
+        var id6d={$id6d};
+        var bill = {$bill}
+            //支付宝
+            $.ajax({
+                async:true,
+                type:'post',
+                data:{id6d:id6d,money:money,bill:bill},
+                url:'{:url("index/index/pailpay")}',
+                dataType:'json',
+                success:function (res) {
+                    if(res.code == 200){
+                        location.href=res.data;
+                    }else{
+                        alert(res.msg);
+                    }
+                }
+            })
+        })
+
+
+</script>
+</html>

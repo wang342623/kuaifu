@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>快服网充值</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="__CSS__/common.css?123">
+    <link rel="stylesheet" href="__CSS__/my.css?123">
+    <script src="__JS__/jquery-2.1.4.min.js?123"></script>
+    <script src="__JS__/rem.js?123"></script>
+    <script src="__JS__/my.js?123"></script>
+</head>
+<body style="font-size: 0">
+<div class="root" style="padding: 0.3rem 0.3rem">
+    <div class="recharge_top">
+        <p class="recharge_top_p1">充值金额</p>
+        <div class="recharge_box clear">
+            <img src="__STATIC__/img/money_logo.png">
+            <input class="recharge_box_input" placeholder="输入金额" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+        </div>
+        <p class="recharge_top_p2">充值金额需大于等于1000元且为整数</p>
+    </div>
+    <div class="clear" style="margin-top: 0.32rem">
+        <div class="recharge_btn_item" data-money="1000">1000元</div>
+        <div class="recharge_btn_item" data-money="2000">2000元</div>
+        <div class="recharge_btn_item" data-money="6000">6000元</div>
+        <div class="recharge_btn_item" data-money="10000">10000元</div>
+    </div>
+    {if $type == 1}
+    <div class="change_recharge" style="position: unset;margin-top: 0.3rem">
+        <img src="__STATIC__/img/zfb.png">
+        <span>使用支付宝支付</span>
+    </div>
+    {else/}
+    <div class="change_recharge">
+        <img src="__STATIC__/img/wx.png">
+        <span>使用微信支付</span>
+    </div>
+    {/if}
+    <div class="recharge_btn" style="position: unset;margin-top: 0.3rem">充 值</div>
+</div>
+<script>
+    $('.recharge_btn').click(function () {
+
+        var money = $('.recharge_box_input').val();
+        if(money < 1000){
+            alert('充值金额需大于等于1000元且为整数');
+            return false;
+        }
+        var id6d;
+        var user_id = {$user_id};
+        {if !empty($id6d)}
+          id6d = {$id6d};
+        {/if}
+        //支付宝
+            $.ajax({
+                async:true,
+                type:'post',
+                data:{id6d:id6d,user_id:user_id,money:money},
+                url:'{:url("index/index/pailpay")}',
+                dataType:'json',
+                success:function (res) {
+                   if(res.code == 200){
+                    location.href=res.data;
+                   }else{
+                    alert(res.msg);
+                   }
+                }
+            })
+    })
+
+
+</script>
+</body>
+</html>
